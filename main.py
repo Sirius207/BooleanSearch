@@ -1,5 +1,11 @@
 import pandas as pd
 
+import time
+
+from utils import getWords
+
+start = time.time()
+
 if __name__ == '__main__':
     # You should not modify this part.
     import argparse
@@ -18,16 +24,24 @@ if __name__ == '__main__':
 
     # Import Data
     Source = pd.read_csv(args.source, names = ["ID", "Title"])
-    
-    
-    # Create Index
-    
 
-    # Import Query
-    
+    # Create Index
+    index = dict()
+    for id, title in enumerate(Source['Title']):
+        words = getWords(title)
+        for word in words:
+            if (word in index):
+                index[word].append(id+1)
+            else:
+                index[word] = []
+                index[word].append(id+1)
 
     # Searching & Output
+    # with open(args.query, 'r') as query_file, open(args.output, 'w') as output:
+    #   for no, query in enumerate(query_file, 1):
+          
 
 
-
-
+    end = time.time()
+    duration = end - start
+    print(duration)
