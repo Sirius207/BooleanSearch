@@ -6,13 +6,15 @@ from operator import (and_, or_, sub)
 # non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？，、：[<>()\s]"
 non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？：.\s]"
 
+#
+# Index Process
+#
+
 def splitByLength(title, split_length):
     words = set()
     title_chi = re.sub(non_chinese_term, "", title)
-    string_length = len(title_chi)
-    for i in range(split_length):
-        for j in range(i, string_length, split_length):
-            words.add(title_chi[j:j+split_length])
+    for id in range(len(title_chi)):
+        words.add(title_chi[id:id+split_length])
     return words
 
 
@@ -23,10 +25,11 @@ def parseEngTerm(title):
 
 def getWords(title):
     words_2gram = splitByLength(title, 2)
-    words_3gram = splitByLength(title, 3)
-    eng_term = parseEngTerm(title)
-    return words_2gram.union(words_3gram, eng_term)
+    return words_2gram.union(splitByLength(title, 3), parseEngTerm(title))
 
+#
+# Query Process
+#
 
 def setOperation(sets, operation):
     results = set()

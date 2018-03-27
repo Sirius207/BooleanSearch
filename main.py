@@ -32,12 +32,15 @@ if __name__ == '__main__':
                 index[word].add(id+1)
 
     # Searching & Output
+    not_first_line = False
     with open(args.query, 'r') as query_file, open(args.output, 'w') as output:
-        for no, query in enumerate(query_file, 1):
+        for query in query_file:
             query_word = query.split(' ')
             results = search(query_word, index)
 
-            if no != 1:
+            if (not_first_line):
                 output.write('\n')
+            else:
+                not_first_line = True
             
             output.write(','.join(results))
