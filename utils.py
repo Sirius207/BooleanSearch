@@ -2,8 +2,9 @@ import re
 import functools
 from operator import (and_, or_, sub)
 
-non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？：\s]"
-
+# non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？，、：／,.=!?[\]<>()\s]"
+# non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？，、：[<>()\s]"
+non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？：.\s]"
 
 def splitByLength(title, split_length):
     words = set()
@@ -16,8 +17,7 @@ def splitByLength(title, split_length):
 
 
 def parseEngTerm(title):
-    words = re.split(r"[^A-Za-z]", title.strip())
-    words = list(filter(None, words))
+    words = re.findall('[a-zA-Z]+', title)
     return set(words)
 
 
