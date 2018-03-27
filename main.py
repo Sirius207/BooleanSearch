@@ -1,10 +1,6 @@
 import pandas as pd
 from utils import (getWords, search)
 
-import time
-
-start = time.time()
-
 if __name__ == '__main__':
     # You should not modify this part.
     import argparse
@@ -45,7 +41,3 @@ if __name__ == '__main__':
                 output.write('\n')
             
             output.write(','.join(results))
-
-    end = time.time()
-    duration = end - start
-    print(duration)
