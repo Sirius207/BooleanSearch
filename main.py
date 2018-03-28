@@ -26,10 +26,9 @@ if __name__ == '__main__':
         words = getWords(title)
         for word in words:
             if (word in index):
-                index[word].add(id+1)
+                index[word] = index[word] + ',' + str(id+1)
             else:
-                index[word] = set()
-                index[word].add(id+1)
+                index[word] = str(id+1)
 
     # Searching & Output
     not_first_line = False
@@ -42,5 +41,5 @@ if __name__ == '__main__':
                 output.write('\n')
             else:
                 not_first_line = True
-            
+
             output.write(','.join(results))

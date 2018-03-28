@@ -3,12 +3,13 @@ import functools
 from operator import (and_, or_, sub)
 
 # non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？，、：／,.=!?[\]<>()\s]"
-# non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？，、：[<>()\s]"
-non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？：.\s]"
+# non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》？，：.[<>()\s]"
+non_chinese_term = r"[0-9A-Za-z！「」【】（）〈〉《》？：.\s]"
 
 #
 # Index Process
 #
+
 
 def splitByLength(title, split_length):
     words = set()
@@ -31,9 +32,16 @@ def getWords(title):
 # Query Process
 #
 
-def setOperation(sets, operation):
+
+def stringToSet(string):
+    list = string.split(',')
+    return set(list)
+
+
+def setOperation(stringList, operation):
     results = set()
-    if (len(sets) == 0):
+    sets = map(stringToSet, stringList)
+    if (len(stringList) == 0):
         results.add(0)
     elif (operation == 'and'):
         results = functools.reduce(and_, sets)
@@ -47,11 +55,14 @@ def setOperation(sets, operation):
 
     return results
 
+
 def processResults(results):
-    list_results = list(results)  
+    list_results = list(results)
+    list_results = list(map(int, list_results))
     list_results.sort()
     str_results = map(str, list_results)
     return str_results
+
 
 def search(query_word, index):
     operation = query_word[1]
@@ -59,9 +70,9 @@ def search(query_word, index):
 
     for order in range(0, len(query_word), 2):
         key = query_word[order]
-        key = re.sub("\n","", key)
+        key = re.sub("\n", "", key)
         if key in index:
             set_list.append(index[key])
-    
+
     results = setOperation(set_list, operation)
     return processResults(results)
