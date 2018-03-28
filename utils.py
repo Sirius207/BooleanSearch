@@ -32,7 +32,7 @@ def getWords(title):
 # Query Process
 #
 
-
+# e.g. '1,3,5,6' => {'1','3','5','6'}
 def stringToSet(string):
     list = string.split(',')
     return set(list)
@@ -56,11 +56,10 @@ def setOperation(stringList, operation):
     return results
 
 
-def processResults(results):
-    list_results = list(results)
-    list_results = list(map(int, list_results))
-    list_results.sort()
-    str_results = map(str, list_results)
+def processResults(setResults):
+    intlist_results = list(map(int, list(setResults)))
+    intlist_results.sort()
+    str_results = map(str, intlist_results)
     return str_results
 
 
