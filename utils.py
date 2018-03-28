@@ -11,10 +11,12 @@ non_chinese_term = r"[0-9A-Za-z！「」【】（）〈〉《》？：.\s]"
 #
 
 
-def splitByLength(title, split_length):
+def titleSplit(title):
     words = set()
-    for id in range(len(title) - split_length + 1):
-        words.add(title[id:id+split_length])
+    for id in range(len(title) - 1):
+        words.add(title[id:id+2])
+    for id in range(len(title) - 2):
+        words.add(title[id:id+3])
     return words
 
 
@@ -24,9 +26,8 @@ def parseEngTerm(title):
 
 
 def getWords(title):
-    title_chi = re.sub(non_chinese_term, "", title)
-    words_2gram = splitByLength(title_chi, 2)
-    return words_2gram.union(splitByLength(title_chi, 3), parseEngTerm(title))
+    words_gram = titleSplit(re.sub(non_chinese_term, "", title))
+    return words_gram.union(parseEngTerm(title))
 
 #
 # Query Process
