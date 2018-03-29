@@ -12,22 +12,23 @@ non_chinese_term = r"[0-9A-Za-z！「」【】（）〈〉《》？：.\s]"
 
 
 def titleSplit(title):
-    words = set()
-    for id in range(len(title) - 1):
-        words.add(title[id:id+2])
-    for id in range(len(title) - 2):
-        words.add(title[id:id+3])
+    words = []
+    titleLength = len(title)
+    for id in range(titleLength - 2):
+        words.append(title[id:id+2])
+        words.append(title[id:id+3])
+    # append last 2 gram
+    words.append(title[titleLength-2:titleLength])
     return words
 
 
 def parseEngTerm(title):
-    words = re.findall('[a-zA-Z]+', title)
-    return set(words)
+    return re.findall('[a-zA-Z]+', title)
 
 
 def getWords(title):
     words_gram = titleSplit(re.sub(non_chinese_term, "", title))
-    return words_gram.union(parseEngTerm(title))
+    return words_gram + parseEngTerm(title)
 
 #
 # Query Process
