@@ -1,4 +1,4 @@
-import pandas as pd
+import csv
 from utils import (getWords, search)
 
 if __name__ == '__main__':
@@ -17,18 +17,17 @@ if __name__ == '__main__':
                         help='output file name')
     args = parser.parse_args()
 
-    # Import Data
-    Source = pd.read_csv(args.source, names=["ID", "Title"])
-
     # Create Index
     index = dict()
-    for id, title in enumerate(Source['Title']):
-        words = getWords(title)
-        for word in words:
-            if (word in index):
-                index[word] = index[word] + ',' + str(id+1)
-            else:
-                index[word] = str(id+1)
+    with open(args.source, 'r') as source:
+        source = csv.reader(source, delimiter=',')
+        for id, row in enumerate(source):
+            words = getWords(row[1])
+            for word in words:
+                if (word in index):
+                    index[word] = index[word] + ',' + str(id+1)
+                else:
+                    index[word] = str(id+1)
 
     # Searching & Output
     not_first_line = False
