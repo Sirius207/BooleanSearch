@@ -2,9 +2,9 @@ import re
 import functools
 from operator import (and_, or_, sub)
 
-# non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？，、：／,.=!?[\]<>()\s]"
+non_chinese_term = r"[0-9A-Za-z！「」【】（）〈〉《》％？，、：／,.=!?[\]<>()\s]"
 # non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》？，：.[<>()\s]"
-non_chinese_term = r"[0-9A-Za-z！「」【】（）〈〉《》？：.\s]"
+# non_chinese_term = r"[0-9A-Za-z！「」【】（）〈〉《》？：.\s]"
 
 #
 # Index Process
