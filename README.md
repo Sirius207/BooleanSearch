@@ -12,7 +12,7 @@ time python main.py --source source.csv --query query.txt --output output.txt
 3. Split Each title to "2-gram", "3-gram", and English Term. (e.g. "川普, 美國...".)
 4. Save each id list as a string, and use split words to create dictionary index.
 
-Index Sample
+Index Sample (Inverted index)
 ```
 {
   'Apple': '1,3,6,8,9,10',
