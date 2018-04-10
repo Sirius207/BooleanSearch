@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+data
+source1.csv
+source2.csv

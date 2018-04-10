@@ -4,7 +4,8 @@ from operator import (and_, or_, sub)
 
 # non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》％？，、：／,.=!?[\]<>()\s]"
 # non_chinese_term = "[0-9A-Za-z！「」【】（）〈〉《》？，：.[<>()\s]"
-non_chinese_term = r"[0-9A-Za-z！「」【】（）〈〉《》？：.\s]"
+non_chinese_term = r"[0-9A-Za-z.\s]"
+non_chinese_symbol = r"[！「」【】（）〈〉《》？：\s]"
 
 #
 # Index Process
@@ -15,8 +16,10 @@ def titleSplit(title):
     words = []
     titleLength = len(title)
     for id in range(titleLength - 2):
-        words.append(title[id:id+2])
-        words.append(title[id:id+3])
+        if ' ' not in title[id:id+2]:
+            words.append(title[id:id+2])
+        if ' ' not in title[id:id+3]:
+            words.append(title[id:id+3])
     # append last 2 gram
     words.append(title[titleLength-2:titleLength])
     return words
@@ -27,7 +30,8 @@ def parseEngTerm(title):
 
 
 def getWords(title):
-    words_gram = titleSplit(re.sub(non_chinese_term, "", title))
+    words_chinese = re.sub(non_chinese_term, "", title)
+    words_gram = titleSplit(re.sub(non_chinese_symbol, " ", words_chinese))
     return words_gram + parseEngTerm(title)
 
 #
