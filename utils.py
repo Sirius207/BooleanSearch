@@ -77,5 +77,8 @@ def search(query_word, index):
         if key in index:
             set_list.append(index[key])
 
-    results = setOperation(set_list, operation)
+    if (query_word[0] not in index and query_word[1] != 'or'):
+        results = {0}
+    else:
+        results = setOperation(set_list, operation)
     return processResults(results)
